@@ -3,6 +3,12 @@
   <a href="https://www.npmjs.com/package/markdown-to-text" target="_blank">
     <img alt="Version" src="https://img.shields.io/npm/v/markdown-to-text.svg">
   </a>
+  <a href="https://www.npmjs.com/package/markdown-to-text" target="_blank">
+    <img alt="npm" src="https://img.shields.io/npm/dm/markdown-to-text">
+  </a>
+  <a href="https://circleci.com/gh/danestves/markdown-to-text" target="_blank">
+    <img alt="CircleCI" src="https://img.shields.io/circleci/build/github/danestves/markdown-to-text">
+  </a>
   <a href="fffff" target="_blank">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
   </a>
