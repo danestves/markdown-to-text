@@ -1,7 +1,19 @@
+jobs:
+  test:
+    executor:
+      name: node/default
+      tag: "13"
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+      - run:
+          command: yarn test
+          name: Run YARN tests
 version: 2.1 # using 2.1 provides access to orbs and other features
 orbs: # declare what orbs we are going to use
   node: circleci/node@3.0.0 # the node orb provides common node-related configuration
 workflows:
   node-tests:
     jobs:
-      - node/test
+      - test
