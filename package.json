@@ -1,0 +1,39 @@
+{
+  "name": "markdown-to-text",
+  "version": "0.1.0",
+  "description": "Parse the markdown and returns a string",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "author": {
+    "email": "estevesd8@gmail.com",
+    "name": "Daniel Esteves",
+    "url": "https://danestves.com"
+  },
+  "keywords": [
+    "markdown",
+    "text",
+    "ts"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/danestves/markdown-to-text.git"
+  },
+  "homepage": "https://github.com/danestves/markdown-to-text.git",
+  "scripts": {
+    "build": "npm run test && tsc",
+    "prepublish": "npm run test && tsc",
+    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'test/**/*.ts'"
+  },
+  "dependencies": {
+    "@types/chai": "^4.2.14",
+    "@types/mocha": "^8.2.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^8.2.1",
+    "should": "^13.2.3",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.2"
+  },
+  "license": "MIT"
+}
