@@ -3,6 +3,7 @@ type Options = {
   listUnicodeChar: string | boolean;
   gfm?: boolean;
   useImgAltText?: boolean;
+  preserveLinks?: boolean;
 };
 
 /**
@@ -33,6 +34,7 @@ const removeMarkdown = (
   options.useImgAltText = options.hasOwnProperty("useImgAltText")
     ? options.useImgAltText
     : true;
+  options.preserveLinks = options.hasOwnProperty("preserveLinks") ? options.preserveLinks : false;
 
   let output = markdown || "";
 
@@ -58,6 +60,10 @@ const removeMarkdown = (
         .replace(/~~/g, "")
         // Fenced codeblocks
         .replace(/`{3}.*\n/g, "");
+    }
+    if(options.preserveLinks) {
+      // Remove inline links while preserving the links
+      output = output.replace(/\[(.*?)\][\[\(](.*?)[\]\)]/g, "$1 ($2)")
     }
     output = output
       // Remove HTML tags
