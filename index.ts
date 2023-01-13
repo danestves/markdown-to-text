@@ -83,6 +83,7 @@ const removeMarkdown = (
       // Remove reference-style links?
       .replace(/^\s{1,2}\[(.*?)\]: (\S+)( ".*?")?\s*$/g, "")
       // Remove atx-style headers
+      // FIXME this can be slow
       .replace(
         /^(\n)?\s{0,}#{1,6}\s+| {0,}(\n)?\s{0,}#{0,} {0,}(\n)?\s{0,}$/gm,
         "$1$2$3"
