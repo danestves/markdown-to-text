@@ -187,5 +187,19 @@ describe("Remove Markdown", () => {
 
       expect(removeMarkdown(paragraph, { listUnicodeChar: false, preserveLinks: true })).to.equal(expected);
     });
+
+    it("should handle weird string fast", () => {
+      const string =
+        "                                                                                                                                                                                         .";
+      const expected =
+        "                                                                                                                                                                                         .";
+
+      const start = performance.now();
+      const removedMarkdown = removeMarkdown(string);
+      const end = performance.now();
+      expect(end - start).to.below(1000);
+      
+      expect(removedMarkdown).to.equal(expected);
+    });
   });
 });
