@@ -179,13 +179,66 @@ describe("Remove Markdown", () => {
 
       expect(removeMarkdown(paragraph)).to.equal(expected);
     });
+
     it("should handle paragraphs with markdown and preserve the url links", () => {
       const paragraph =
         "\n## This is a heading ##\n\nThis is a paragraph with [a link](http://www.disney.com/).\n\n### This is another heading\n\nIn `Getting Started` we set up `something` foo.\n\n  * Some list\n  * With items\n    * Even indented";
       const expected =
         "\nThis is a heading\n\nThis is a paragraph with a link (http://www.disney.com/).\n\nThis is another heading\n\nIn Getting Started we set up something foo.\n\n  Some list\n  With items\n    Even indented";
 
-      expect(removeMarkdown(paragraph, { listUnicodeChar: false, preserveLinks: true })).to.equal(expected);
+      expect(
+        removeMarkdown(paragraph, {
+          listUnicodeChar: false,
+          preserveLinks: true,
+        }),
+      ).to.equal(expected);
+    });
+
+    it("should remove the inline KaTeX", () => {
+      const paragraph =
+        "\nThis is the Pythagorean Theorem $ c = \\sqrt{a^2 + b^2} $.";
+      const expected = "\nThis is the Pythagorean Theorem .";
+
+      expect(
+        removeMarkdown(paragraph, {
+          listUnicodeChar: false,
+          preserveKaTeX: false,
+        }),
+      ).to.equal(expected);
+    });
+
+    it("should remove the KaTeX.", () => {
+      const paragraph =
+        "Inline KaTeX $E=mc^2$, for example.\nKaTeX block 1.\n\\[\nF = ma\n\\]\nKaTeX block 2.\n$$\n\\int_{a}^{b} x^2 \\,dx\n$$";
+      const expected =
+        "Inline KaTeX , for example.\nKaTeX block 1.\n\nKaTeX block 2.\n";
+      expect(
+        removeMarkdown(paragraph, {
+          listUnicodeChar: false,
+          preserveKaTeX: false,
+        }),
+      ).to.equal(expected);
+    });
+
+    it("should remove the frontmatter", () => {
+      const paragraph = `
+---
+title: "Test title"
+date: 2024-01-09
+tags:
+  - Markdown
+  - Front Matter
+author: "John Doe"
+---
+
+# Main Content...`;
+      const expected = `\nMain Content...`;
+      expect(
+        removeMarkdown(paragraph, {
+          listUnicodeChar: false,
+          preserveKaTeX: false,
+        }),
+      ).to.equal(expected);
     });
   });
 });
