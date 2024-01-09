@@ -185,7 +185,12 @@ describe("Remove Markdown", () => {
       const expected =
         "\nThis is a heading\n\nThis is a paragraph with a link (http://www.disney.com/).\n\nThis is another heading\n\nIn Getting Started we set up something foo.\n\n  Some list\n  With items\n    Even indented";
 
-      expect(removeMarkdown(paragraph, { listUnicodeChar: false, preserveLinks: true })).to.equal(expected);
+      expect(
+        removeMarkdown(paragraph, {
+          listUnicodeChar: false,
+          preserveLinks: true,
+        }),
+      ).to.equal(expected);
     });
   });
 });

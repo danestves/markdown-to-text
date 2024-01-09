@@ -21,7 +21,7 @@ const removeMarkdown = (
   markdown: string,
   options: Options = {
     listUnicodeChar: "",
-  }
+  },
 ) => {
   options = options || {};
   options.listUnicodeChar = options.hasOwnProperty("listUnicodeChar")
@@ -34,7 +34,9 @@ const removeMarkdown = (
   options.useImgAltText = options.hasOwnProperty("useImgAltText")
     ? options.useImgAltText
     : true;
-  options.preserveLinks = options.hasOwnProperty("preserveLinks") ? options.preserveLinks : false;
+  options.preserveLinks = options.hasOwnProperty("preserveLinks")
+    ? options.preserveLinks
+    : false;
 
   let output = markdown || "";
 
@@ -46,7 +48,7 @@ const removeMarkdown = (
       if (options.listUnicodeChar)
         output = output.replace(
           /^([\s\t]*)([\*\-\+]|\d+\.)\s+/gm,
-          options.listUnicodeChar + " $1"
+          options.listUnicodeChar + " $1",
         );
       else output = output.replace(/^([\s\t]*)([\*\-\+]|\d+\.)\s+/gm, "$1");
     }
@@ -61,9 +63,9 @@ const removeMarkdown = (
         // Fenced codeblocks
         .replace(/`{3}.*\n/g, "");
     }
-    if(options.preserveLinks) {
+    if (options.preserveLinks) {
       // Remove inline links while preserving the links
-      output = output.replace(/\[(.*?)\][\[\(](.*?)[\]\)]/g, "$1 ($2)")
+      output = output.replace(/\[(.*?)\][\[\(](.*?)[\]\)]/g, "$1 ($2)");
     }
     output = output
       // Remove HTML tags
@@ -85,7 +87,7 @@ const removeMarkdown = (
       // Remove atx-style headers
       .replace(
         /^(\n)?\s{0,}#{1,6}\s+| {0,}(\n)?\s{0,}#{0,} {0,}(\n)?\s{0,}$/gm,
-        "$1$2$3"
+        "$1$2$3",
       )
       // Remove emphasis (repeat the line to remove double emphasis)
       .replace(/([\*_]{1,3})(\S.*?\S{0,1})\1/g, "$2")
