@@ -4,6 +4,7 @@ type Options = {
   gfm?: boolean;
   useImgAltText?: boolean;
   preserveLinks?: boolean;
+  preserveKaTeX?: boolean;
 };
 
 /**
@@ -37,9 +38,14 @@ const removeMarkdown = (
   options.preserveLinks = options.hasOwnProperty("preserveLinks")
     ? options.preserveLinks
     : false;
+  options.preserveKaTeX = options.hasOwnProperty("preserveKaTeX")
+    ? options.preserveKaTeX
+    : false;
 
   let output = markdown || "";
 
+  // Remove the frontmatter in markdown.
+  output = output.replace(/^---[\s\S]*?^---\s*/m, "");
   // Remove horizontal rules (stripListHeaders conflict with this rule, which is why it has been moved to the top)
   output = output.replace(/^(-\s*?|\*\s*?|_\s*?){3,}\s*$/gm, "");
 
@@ -62,6 +68,15 @@ const removeMarkdown = (
         .replace(/~~/g, "")
         // Fenced codeblocks
         .replace(/`{3}.*\n/g, "");
+    }
+    if (!options.preserveKaTeX) {
+      output = output
+        // Remove KaTeX wrapped by $$...$$
+        .replace(/\$\$([\s\S]*?)\$\$/g, "")
+        // Remove inline KaTeX
+        .replace(/\$.*?\$/g, "")
+        // Remove KaTeX wrapped by $$\[...\]$$
+        .replace(/\\\[(.|\n)*?\\\]/g, "");
     }
     if (options.preserveLinks) {
       // Remove inline links while preserving the links
